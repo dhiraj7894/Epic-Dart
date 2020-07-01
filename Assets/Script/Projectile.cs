@@ -4,47 +4,62 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Rigidbody projectile;
+    public static Projectile Pro;
+    public GameObject projectile;
     public Transform shootPoint;
     public LayerMask layer;
     public LineRenderer lineVisual;
-    public int lineSegment = 10;
 
+
+    public int lineSegment = 10;
+    public GameObject[] Points;
+
+	public Transform start_pos,end_pos;
+    public GameObject TrajectorySpwans;
     Vector3 cursor;
     private Camera cam;
+
+    bool desabledLaunch = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        Pro = this;
         cam = Camera.main;
         lineVisual.positionCount = lineSegment;
+
+        Points = new GameObject[lineSegment];
+        for(int i = 0; i < lineSegment; i++)
+        {
+            Points[i] = Instantiate(projectile, transform.position, Quaternion.identity);
+            Points[i].transform.parent = TrajectorySpwans.transform;
+        }
+
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         LaunchProjectile();
+
     }
 
     void LaunchProjectile()
     {
-        cursor = Refelection.re.hitPoint[0];
 
-        RaycastHit hit;
+	    Vector3 vo = CalculateVelocty(end_pos.position, start_pos.position, 1f);
 
-        if (Physics.Raycast(cursor, shootPoint.forward, 100f, layer))
-        {
-            Vector3 vo = CalculateVelocty(cursor, shootPoint.position, 1f);
-            Visualize(vo);
-            //transform.rotation = Quaternion.LookRotation(vo);
-        }
+
+        Visualize(vo);
+
     }
 
     void Visualize(Vector3 vo)
     {
-        for (int i = 0; i < lineSegment; i++)
+        for (int i = 0; i < Points.Length; i++)
         {
             Vector3 pos = CalculatePosInTime(vo, i / (float)lineSegment);
+            Points[i].transform.position = pos;
             lineVisual.SetPosition(i, pos);
         }
     }
@@ -81,8 +96,4 @@ public class Projectile : MonoBehaviour
         return result;
     }
 
-    void cretateProjecttile()
-    {
-
-    }
 }

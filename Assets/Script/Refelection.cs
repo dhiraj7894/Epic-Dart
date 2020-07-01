@@ -9,7 +9,10 @@ public class Refelection : MonoBehaviour
     public int maxReflectionCount = 5;
     public float maxStepDistance = 200;
 
-    public List<Vector3> hitPoint = new List<Vector3>();
+	public List<Vector3> hitPoint = new List<Vector3>();
+    
+	public GameObject[] pos;
+	public GameObject end_pos,start_pos;
     private void Start()
     {
         re = this;
@@ -20,26 +23,30 @@ public class Refelection : MonoBehaviour
         Handles.ArrowHandleCap(0, this.transform.position + this.transform.forward * 0.25f, this.transform.rotation, 0.5f, EventType.Repaint);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, 0.25f);
-
+	    start_pos.transform.position = this.transform.position;		
         DrawPredictedReflectionPattern(this.transform.position + this.transform.forward * 0.75f, this.transform.forward, maxReflectionCount);
     }
 
     private void DrawPredictedReflectionPattern(Vector3 position, Vector3 direction, int reflectionsRemaining)
     {
         //Debug.Log(reflectionsRemaining);
-        if (reflectionsRemaining == 0)
-        {
-            return;
-        }
-        if (reflectionsRemaining == 5)
-        {
-            hitPoint.Clear();
+	    if (reflectionsRemaining == 0)
+	    {
+		    return;
+	    }
+	    if (reflectionsRemaining == maxReflectionCount)
+	    {
+		    hitPoint.Clear();
             
-        }
-        else
-        {
-            hitPoint.Add(position);
-        }
+	    }
+	    else
+	    {
+		    hitPoint.Add(position);
+	    }
+	    
+        
+	    if(hitPoint.Count > 0)
+	    pos[hitPoint.Count-1].transform.position = hitPoint[hitPoint.Count-1];
         Vector3 startingPosition = position;
         Ray ray = new Ray(position, direction);
         RaycastHit hit;
@@ -53,11 +60,18 @@ public class Refelection : MonoBehaviour
         {
             position += direction * maxStepDistance;
         }
+	  
+	    if(reflectionsRemaining == 1)
+	    
+	    {
+	    	end_pos.transform.position = position;
+	    }
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(startingPosition, position);
         
         DrawPredictedReflectionPattern(position, direction, reflectionsRemaining - 1);
     }
+
 
 
 }
