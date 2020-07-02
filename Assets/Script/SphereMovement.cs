@@ -37,12 +37,12 @@ public class SphereMovement : MonoBehaviour
 		    else
 		    {
 			    // set next target position  
-			    if( pos_no <= pos.Count )
+			    if( pos_no <= pos.Count-2 )
 			    {
 				    pos_no ++;
-				    current_target =pos[pos_no];
-					
-			    }
+                    current_target = pos[pos_no];
+
+                }
 			    else
 			    {
 			    	pos_no = 1;
@@ -51,13 +51,9 @@ public class SphereMovement : MonoBehaviour
 			    }
 		    }
 
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, current_target, speed * Time.deltaTime);
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, current_target, speed * Time.fixedDeltaTime);
         }
-        
-/*        if (transform.position == pos[179]  && Movement.mv.mouseUp)
-        {
-            stop = true;
-        }*/
+
         
         
     }

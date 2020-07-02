@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Env
   - Goal
+  - Goal-1
   layers:
   - Default
   - TransparentFX
