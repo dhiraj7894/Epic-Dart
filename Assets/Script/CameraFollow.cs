@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
     {
         cF = this;
     }
-    void FixedUpdate()
+    void Update()
     {
         level();
         level2();
@@ -42,7 +42,7 @@ public class CameraFollow : MonoBehaviour
             if (!activate && !GameManager.gm.isBeachChnged)
             {
                 dPos = cameraTarget.position + dist;
-                sPos = Vector3.Lerp(transform.position, dPos, sSpeed * Time.fixedDeltaTime);
+                sPos = Vector3.Lerp(transform.position, dPos, sSpeed * Time.deltaTime);
                 transform.position = sPos;
             }
         }
@@ -55,7 +55,7 @@ public class CameraFollow : MonoBehaviour
     void level2()
     {
         dPos = cameraTarget.position + dist;
-        sPos = Vector3.Lerp(transform.position, dPos, sSpeed * Time.fixedDeltaTime);
+        sPos = Vector3.Lerp(transform.position, dPos, sSpeed * Time.deltaTime);
         if (GameManager.gm.LaunchedBall != null && GameManager.gm.level2Changed)
         {
             if (SphereMovement.instance.pos_no == 79 && !activate)
@@ -90,8 +90,10 @@ public class CameraFollow : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         cameraTarget = cam.transform;
-        transform.position = Vector3.Lerp(transform.position,new Vector3(-11.26f, 7.39f, -0.45f),5*Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(-11.26f, 7.39f, -0.45f), 5 * Time.deltaTime);
         transform.rotation = Quaternion.Euler(13.464f, 88.42f, 0);
+        /*transform.position = Vector3.Lerp(transform.position, new Vector3(-5.1f, 14f, -0.2f), 5 * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(44.31f, 87.86f, -1.12f);*/
     }
     
 }

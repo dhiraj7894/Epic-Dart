@@ -24,12 +24,15 @@ public class BallActivator : MonoBehaviour
 
                 if (!GameManager.gm.sp)
                 {
-                    Destroy(Instantiate(GameManager.gm.bigSplash, GameManager.gm.particleSpwan.position, Quaternion.Euler(90, 0, 0)), 1);
+                    rb.AddForce(Vector3.back * 8, ForceMode.Impulse);
+                    Destroy(Instantiate(GameManager.gm.bigSplash, GameManager.gm.particleSpwan.position, Quaternion.Euler(140, -48, 0)), 1);
                     GameManager.gm.sp = true;
                 }
                 if (!GameManager.gm.sp1 && GameManager.gm.level2Changed)
                 {
-                    Destroy(Instantiate(GameManager.gm.bigSplash, GameManager.gm.particleSpwan_1.position, Quaternion.Euler(90, 0, 0)), 1);
+                    
+                    rb.AddForce(Vector3.back * 6, ForceMode.Impulse);
+                    Destroy(Instantiate(GameManager.gm.bigSplash, GameManager.gm.particleSpwan_1.position, Quaternion.Euler(150, -57, 0)), 1);
                     GameManager.gm.sp1 = true;
                 }
             }
@@ -41,21 +44,24 @@ public class BallActivator : MonoBehaviour
         if (coll.gameObject.CompareTag("Goal"))
         {
             GameManager.gm.ball.Add(gameObject);
-            Debug.Log("Hurrey");
+            //Debug.Log("Hurrey");
             if (!GameManager.gm.isReachedGoal)
             {
                 CameraFollow.cF.activate = true;
                 //Destroy(Instantiate(GameManager.gm.bigSplash, transform.position, Quaternion.Euler(90,0,0)), 1);
                 GameManager.gm.isReachedGoal = true;
             }
-            Destroy(this.gameObject);
+            if (GameManager.gm.isBeachChnged)
+            {
+                Destroy(this.gameObject);
+            }
             Movement.mv.mouseUp = false;
 
         }
         if (coll.gameObject.CompareTag("Goal-1"))
         {
             GameManager.gm.ball.Add(gameObject);
-            Debug.Log("Hurrey_2");
+            //Debug.Log("Hurrey_2");
             if (!GameManager.gm.isReachedGoal_1)
             {
                 CameraFollow.cF.activate = true;

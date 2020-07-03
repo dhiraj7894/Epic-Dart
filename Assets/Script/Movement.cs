@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
     public float fireRate = 1;
     public float cooldown;
     public GameObject SpwanBall;
+
     private void Start()
     {
         mv = this;
@@ -42,10 +43,17 @@ public class Movement : MonoBehaviour
             if (GameManager.gm.level2Changed && SphereMovement.instance.pos_no == 65)
             {
                 TimeManager.tM.slowMo();
-                CameraFollow.cF.sSpeed = 80f;
-                CameraFollow.cF.dist = new Vector3(-8, 2f, 0);
-                CameraFollow.cF.cameraTarget = GameManager.gm.LaunchedBall.transform;
-                CameraFollow.cF.transform.LookAt(GameManager.gm.LaunchedBall.transform);
+                //CameraFollow.cF.cameraTarget = CameraFollow.cF.cam.transform;
+                CameraFollow.cF.transform.position = Vector3.Lerp(CameraFollow.cF.transform.position, new Vector3(7f, 4.5f, -1.1f), 5 * Time.deltaTime);
+                CameraFollow.cF.transform.rotation = Quaternion.Euler(19.73f, 82.752f, 0);
+
+                /*CameraFollow.cF.transform.position = Vector3.Lerp(CameraFollow.cF.transform.position, new Vector3(8.304434f, 15.79116f, -0.2f), 5 * Time.deltaTime);
+                CameraFollow.cF.transform.rotation = Quaternion.Euler(44.31f, 87.86f, -1.12f);*/
+                CameraFollow.cF.sSpeed = 0.5f;
+
+                //CameraFollow.cF.dist = new Vector3(-8, 2f, 0);
+                //CameraFollow.cF.cameraTarget = GameManager.gm.LaunchedBall.transform;
+                //CameraFollow.cF.transform.LookAt(GameManager.gm.LaunchedBall.transform);
             }
             if (GameManager.gm.level2Changed && SphereMovement.instance.pos_no == 77)
             {
@@ -125,4 +133,5 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(t);
         anime.SetBool("throw", false);
     }
+
 }

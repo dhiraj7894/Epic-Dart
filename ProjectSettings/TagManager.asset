@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Goal
   - Goal-1
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - PostProcessing
+  - noPosPros
   - 
   - 
   - 

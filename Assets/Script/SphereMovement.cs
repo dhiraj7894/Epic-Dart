@@ -22,7 +22,7 @@ public class SphereMovement : MonoBehaviour
     {
         instance = this;
     }
-    void Update()
+    void FixedUpdate()
     {
         AddPos();
 
